@@ -5,7 +5,9 @@ This project implements a neural network (NN) model to perform two distinct task
 2. **Categorical Classification** (multi-class).
 
 ## Files
-- `main.py`: Project source code.
+- `main.py`: Model training.
+- `predict.py`: Model testing.
+- `data_factory.py`: To randomly generate the datasets student_scores.txt, pass_fail_labels.txt, and category_labels.txt.
 - `student_scores.txt`: Student score dataset.
 - `pass_fail_labels.txt`: Pass/Fail labels.
 - `category_labels.txt`: Category labels.
@@ -38,6 +40,7 @@ This project implements a neural network (NN) model to perform two distinct task
 1. Install the required libraries.
 2. Ensure `student_scores.txt`, `pass_fail_labels.txt`, and `category_labels.txt` files are in the correct format.
 3. Run the `main.py` script to train the model.
+4. Run the `predict.py` script to test the model.
 
 ## Outputs
 - During training, error graphs (`Error 1` and `Error 2`) are plotted.

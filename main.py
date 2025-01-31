@@ -25,6 +25,7 @@ hidden_layer_size_2 = 4
 output_layer_size_1 = 1
 output_layer_size_2 = 4
 
+
 # Weights For The Hidden Layers
 weights_input_hidden = np.random.randn(input_layer_size, hidden_layer_size)
 bias_hidden = np.zeros((1, hidden_layer_size))
@@ -43,7 +44,7 @@ error_1_list = []
 error_2_list = []
 
 # Training
-learning_rate = 0.1
+learning_rate = 0.01
 for epoch in range(100000):
     # Forward Computation
     hidden_layer_input = np.dot(X, weights_input_hidden) + bias_hidden
@@ -98,6 +99,16 @@ print(output_1)
 print("\nOutputs After Training (Category):")
 print(output_2)
 
+# Save The Parameters
+np.save('trained_weights_input_hidden.npy', weights_input_hidden)
+np.save('trained_bias_hidden.npy', bias_hidden)
+np.save('trained_weights_hidden_hidden.npy', weights_hidden_hidden)
+np.save('trained_bias_hidden_2.npy', bias_hidden_2)
+np.save('trained_weights_hidden_output_1.npy', weights_hidden_output_1)
+np.save('trained_bias_output_1.npy', bias_output_1)
+np.save('trained_weights_hidden_output_2.npy', weights_hidden_output_2)
+np.save('trained_bias_output_2.npy', bias_output_2)
+
 # Drawing The Error Graph
 plt.figure(figsize=(10, 5))
 
@@ -109,3 +120,4 @@ plt.xlabel("Epoch")
 plt.ylabel("Error")
 plt.legend()
 plt.show()
+

@@ -8,7 +8,7 @@ while True:
         exp_values = np.exp(x - np.max(x, axis=1, keepdims=True))
         return exp_values / np.sum(exp_values, axis=1, keepdims=True)
 
-    # Eğitilmiş parametreleri yükle
+    # Install the Trained Parameters
     weights_input_hidden = np.load('trained_weights_input_hidden.npy')
     bias_hidden = np.load('trained_bias_hidden.npy')
     weights_hidden_hidden = np.load('trained_weights_hidden_hidden.npy')
@@ -19,28 +19,33 @@ while True:
     bias_output_2 = np.load('trained_bias_output_2.npy')
 
     def predict(scores):
-        # Girdiyi normalize et ve hazırla
+        # Normalize the Input
         X = np.array(scores) / 100
-        X = X.reshape(1, -1)  # Batch boyutu ekle
+        X = X.reshape(1, -1)
         
-        # Forward pass
+        # Forward Pass
         hidden_layer_output = sigmoid(np.dot(X, weights_input_hidden) + bias_hidden)
         hidden_layer_output_2 = sigmoid(np.dot(hidden_layer_output, weights_hidden_hidden) + bias_hidden_2)
         
-        # Pass/Fail tahmini
+        # Pass/Fail Prediction
         pass_fail_output = sigmoid(np.dot(hidden_layer_output_2, weights_hidden_output_1) + bias_output_1)
         
-        # Kategori tahmini
+        # Category Prediction
         category_output = softmax(np.dot(hidden_layer_output_2, weights_hidden_output_2) + bias_output_2)
         
         return pass_fail_output, category_output
 
-    # Kullanıcı girdisi
-    test_scores = list(map(float, input("3 ders notunu girin (virgülle ayırın): ").split(',')))
+    # User Input
+    test_scores = list(map(float, input("Enter the 3 lessons score(Separate with a comma and don't use space): ").split(',')))
     pass_fail, category = predict(test_scores)
 
-    print(f"\nPass/Fail Olasılığı: {pass_fail[0][0]:.4f}")
-    print(f"Tahmin Edilen Kategori: {np.argmax(category)}. sınıf")
-    print("Kategori Dağılımı:")
+    if pass_fail >= 0.5:
+        pass_fail = "Pass"
+    else:
+        pass_fail = "Fail"
+    print(f"\nPass/Fail: {pass_fail}")
+    print(f"Predicted Category: Category {np.argmax(category)}")
+    print("Categories:")
     for i, prob in enumerate(category[0]):
-        print(f"{i}. sınıf: {prob:.4f}")
+        print(f"Category {i}: {prob:.4f}")
+    print("P.S.\nCategory 0 = Poor\nCategory 1 = Average\nCategory 2 = Good\nCategory 3 = Excellent")
